@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { GarmentCategory, GarmentSize } from '@/data/garments';
-import { categories, garments } from '@/data/garments';
+import { categories, filterGarments, garments } from '@/data/garments';
 import { Search, SearchX } from 'lucide-react';
 import GarmentCard from '@/components/GarmentCard';
 
@@ -19,17 +19,12 @@ export default function Catalog() {
     return sizeFilters.filter((size) => size === 'Todos' || sizes.has(size));
   }, []);
 
-  const filtered = useMemo(() => {
-    const term = query.trim().toLocaleLowerCase('es-AR');
-    return garments.filter((garment) => {
-      if (activeCategory !== 'Todas' && garment.category !== activeCategory) return false;
-      if (activeSize !== 'Todos' && garment.size !== activeSize) return false;
-      if (onlyAvailable && garment.availability !== 'available') return false;
-      if (term && ![garment.name, garment.notes, garment.category, garment.id]
-        .join(' ').toLocaleLowerCase('es-AR').includes(term)) return false;
-      return true;
-    });
-  }, [activeCategory, activeSize, onlyAvailable, query]);
+  const filtered = useMemo(() => filterGarments(garments, {
+    category: activeCategory,
+    size: activeSize,
+    onlyAvailable,
+    query,
+  }), [activeCategory, activeSize, onlyAvailable, query]);
 
   const availableCount = garments.filter((garment) => garment.availability === 'available').length;
   const resetFilters = () => {
