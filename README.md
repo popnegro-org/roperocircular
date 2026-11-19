@@ -47,10 +47,19 @@ La URL del perfil no está inventada ni publicada. Cuando el propietario la comp
 ```bash
 npm install
 npm run dev
+npm test
+npm run test:watch        # modo interactivo
 npm run lint
 npm run typecheck
 npm run build
 ```
+
+## Tests y CI
+
+- Vitest ejecuta pruebas unitarias y de componentes en jsdom.
+- Testing Library verifica la interfaz desde la perspectiva del usuario.
+- `npm test` ejecuta la suite una vez; `npm run test:watch` inicia el modo interactivo.
+- GitHub Actions ejecuta tests, lint, typecheck y build en cada PR hacia `main` y en pushes a `main`.
 
 ## Privacidad
 
@@ -65,6 +74,8 @@ npm run build
 - [x] Consultas por WhatsApp con mensaje personalizado por prenda.
 - [x] Instagram configurable sin URL ficticia.
 - [x] SEO básico y estructura accesible.
+- [x] Suite automatizada Vitest + Testing Library.
+- [x] CI de GitHub Actions para tests, lint, typecheck y build.
 - [x] Lint, typecheck y build ejecutados localmente en la rama candidata.
 - [x] QA visual local de la landing completa: catálogo vacío, sin inventario ficticio.
 - [ ] Pendientes del propietario: URL de Instagram, fotos y precios reales de prendas, y confirmación de modalidad/horarios de retiro.
